@@ -4,6 +4,7 @@ import (
 	"go-download/controllers"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,11 @@ func Routerx() {
 	if port == "" {
 		port = "8080"
 	}
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
+	}))
+
 	router.GET("/download/:namafile", controllers.Download)
 	router.GET("/", controllers.Index)
 	router.POST("/kirim", controllers.Kirim)
