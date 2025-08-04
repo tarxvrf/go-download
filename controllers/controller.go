@@ -26,7 +26,7 @@ func Download(c *gin.Context) {
 }
 
 func User(c *gin.Context) {
-	var users databases.User
+	var users []databases.User
 	err := databases.DB.Find(&users).Error
 
 	if err != nil {
@@ -36,7 +36,7 @@ func User(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{
-		"message": users.Name,
+		"message": users,
 	})
 
 }
