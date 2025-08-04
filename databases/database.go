@@ -17,12 +17,18 @@ type User struct {
 	Name string `gorm:"size=60" json:"name"`
 }
 
-func Konekdb() {
-	err := godotenv.Load()
-	if err != nil {
-		panic("Gagal load file .env")
+func Init() {
+	if os.Getenv("RAILWAY_ENVIRONMENT") == "" {
+		err := godotenv.Load()
+		if err != nil {
+			fmt.Println("Error loading .env file")
+		}
 	}
 
+}
+
+func Konekdb() {
+	Init()
 	dsn := os.Getenv("DATABASE_URL")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
