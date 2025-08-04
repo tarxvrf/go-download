@@ -28,3 +28,8 @@ Thumbs.db
 # Environment config
 .env
 .env.*
+
+# Live reload tool
+/tmp
+.air
+
