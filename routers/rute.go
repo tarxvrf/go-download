@@ -15,6 +15,8 @@ func Routerx() {
 	}
 	router.GET("/download/:namafile", controllers.Download)
 	router.GET("/", controllers.Index)
+	router.POST("/kirim", controllers.Kirim)
+	router.GET("/users", controllers.User)
 	router.Run(":" + port)
 
 }
