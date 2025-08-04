@@ -5,11 +5,10 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func Routerx() {
-	godotenv.Load()
+
 	router := gin.Default()
 	port := os.Getenv("PORT")
 	if port == "" {
