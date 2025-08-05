@@ -18,6 +18,7 @@ func Routerx() {
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins: true,
 		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:    []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 	}))
 
 	router.GET("/download/:namafile", controllers.Download)
