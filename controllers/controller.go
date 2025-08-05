@@ -55,3 +55,19 @@ func Kirim(c *gin.Context) {
 	})
 
 }
+
+func Hapus(c *gin.Context) {
+	var user databases.User
+	id := c.Param("id")
+	ceking := databases.DB.First(&user, id).Error
+	if ceking != nil {
+		c.JSON(500, gin.H{
+			"message": "data tidak ditemukan",
+		})
+	}
+	databases.DB.Delete(&user, id)
+	c.JSON(200, gin.H{
+		"message": "data berhasil dihapus",
+	})
+
+}

@@ -19,7 +19,7 @@ type User struct {
 
 func Init() {
 	if os.Getenv("RAILWAY_ENVIRONMENT") == "" {
-		err := godotenv.Load()
+		err := godotenv.Load(".env")
 		if err != nil {
 			fmt.Println("Error loading .env file")
 		}
