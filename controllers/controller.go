@@ -36,7 +36,7 @@ func User(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{
-		"message": users,
+		"data": users,
 	})
 
 }
@@ -70,4 +70,43 @@ func Hapus(c *gin.Context) {
 		"message": "data berhasil dihapus",
 	})
 
+}
+
+// file: controllers/user.go
+func Edit(c *gin.Context) {
+	var user databases.User // struct dari DB
+	id := c.Param("id")
+
+	// 1. Cari data berdasarkan ID
+	if err := databases.DB.First(&user, id).Error; err != nil {
+		c.JSON(404, gin.H{"message": "Data tidak ditemukan"})
+		return
+	}
+
+	// 2. Ambil input dari body JSON
+	var input struct {
+		Name       string `json:"name"`
+		Lokasi     string `json:"lokasi"`
+		Telpon     string `json:"telepon"`
+		Picgedung  string `json:"picgedung"`
+		Tanggal    string `json:"tanggal"`
+		Status     string `json:"status"`
+		Foto1      string `json:"foto1"`
+		Foto2      string `json:"foto2"`
+		Foto3      string `json:"foto3"`
+		Keterangan string `json:"keterangan"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"message": "Input tidak valid"})
+		return
+	}
+
+	// 3. Update data
+	if err := databases.DB.Model(&user).Updates(input).Error; err != nil {
+		c.JSON(500, gin.H{"message": "Gagal update data"})
+		return
+	}
+
+	// 4. Beri response
+	c.JSON(200, gin.H{"message": "Data berhasil diupdate", "data": user})
 }

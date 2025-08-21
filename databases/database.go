@@ -12,9 +12,17 @@ import (
 var DB *gorm.DB
 
 type User struct {
-	gorm.Model
-	ID   int    `gorm:"primaryKey" json:"id"`
-	Name string `gorm:"size=60" json:"name"`
+	ID         int    `gorm:"primaryKey" json:"id"`
+	Name       string `json:"name"`
+	Lokasi     string `json:"lokasi"`
+	Picgedung  string `json:"picgedung"`
+	Tanggal    string `json:"tanggal"`
+	Status     string `json:"status"`
+	Telpon     string `json:"telepon"`
+	Foto1      string `json:"foto1"`
+	Foto2      string `json:"foto2"`
+	Foto3      string `json:"foto3"`
+	Keterangan string `json:"keterangan"`
 }
 
 func Init() {
@@ -28,8 +36,10 @@ func Init() {
 }
 
 func Konekdb() {
-	Init()
-	dsn := os.Getenv("DATABASE_URL")
+	//Init()
+
+	//dsn := os.Getenv("DATABASE_URL")
+	dsn := "host=localhost user=postgres password=123456 dbname=toko port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println("gagal koneksi ke database")

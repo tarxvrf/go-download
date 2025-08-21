@@ -6,11 +6,9 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func Routerx() {
-	godotenv.Load(".env")
 	router := gin.Default()
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -18,7 +16,7 @@ func Routerx() {
 	}
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins: true,
-		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE"},
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
 		AllowHeaders:    []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 	}))
 
@@ -26,6 +24,7 @@ func Routerx() {
 	router.GET("/", controllers.Index)
 	router.POST("/kirim", controllers.Kirim)
 	router.DELETE("/hapus/:id", controllers.Hapus)
+	router.PUT("/edit/:id", controllers.Edit)
 	router.GET("/users", controllers.User)
 	router.Run(":" + port)
 
